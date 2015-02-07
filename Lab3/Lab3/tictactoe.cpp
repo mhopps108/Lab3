@@ -9,7 +9,6 @@ int main(int argc, const char * argv[]) {
    board[0][0] = 'X';
    board[2][2] = 'O';
    PrintBoard(board);
-
    
    cout << "\n\n";
    return 0;
@@ -47,6 +46,5 @@ void GetMove(int *row, int *col) {
 // and false otherwise. Used in main to see if the move is valid and alert
 // the user if it is not.
 bool MoveIsValid(char board[3][3], int row, int col) {
-   
-   return true;
+   return board[row][col] == 0 ? true : false;
 }
