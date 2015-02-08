@@ -5,10 +5,30 @@ using namespace std;
 
 int main(int argc, const char * argv[]) {
    
+   const int MAX_MOVES = 9;
    char board[3][3] = {0};
-   board[0][0] = 'X';
-   board[2][2] = 'O';
-   PrintBoard(board);
+   
+   int row = -1, col = -1, move = -1;
+   
+   for (int i = 0; i < MAX_MOVES; i++) {
+      
+      PrintBoard(board);
+      
+      move *= -1;
+      do {
+         if (move > 0) {
+            cout << "\n  X's turn: ";
+         }
+         else {
+            cout << "   O's turn: ";
+         }
+
+         GetMove(&row, &col);
+         
+      } while (!MoveIsValid(board, row, col));
+      
+      board[row][col] = move;    // assign value to board matrix
+   }
    
    cout << "\n\n";
    return 0;
@@ -18,15 +38,19 @@ int main(int argc, const char * argv[]) {
 // PrintBoard takes a 2-dimensional array parameter representing the game state
 // and prints it to cout. See the spec for details on formatting the output.
 void PrintBoard(char board[3][3]) {
-   cout << " - 0  1  2 " << endl;
+   cout << "\n    0  1  2 " << endl;
+   cout << "   -------- " << endl;
    for (int i = 0; i < 3; i++) {
-      cout << " " << i;
+      cout << " " << i << "|";
       for (int j = 0; j < 3; j++) {
-         if (board[i][j] == 0) {
-            cout << " . ";
+         if (board[i][j] == 1) {
+            cout << " X ";
+         }
+         else if (board[i][j] == -1) {
+            cout << " O ";
          }
          else {
-            cout << " " << board[i][j] << " ";
+            cout << " . ";
          }
       }
       cout << endl;
@@ -39,7 +63,8 @@ void PrintBoard(char board[3][3]) {
 // variables were used as arguments in the main. Do not check move validity
 // in this function.
 void GetMove(int *row, int *col) {
-   
+   char yumyum = 0;     // eats up the , on user input
+   cin >> *row >> yumyum >> *col;
 }
 
 // MoveIsValid returns true if the board is empty at the requested row/col,
@@ -48,3 +73,5 @@ void GetMove(int *row, int *col) {
 bool MoveIsValid(char board[3][3], int row, int col) {
    return board[row][col] == 0 ? true : false;
 }
+
+
