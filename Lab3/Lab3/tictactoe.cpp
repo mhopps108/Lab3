@@ -8,14 +8,17 @@ int main(int argc, const char * argv[]) {
    const int MAX_MOVES = 9;
    char board[3][3] = {0};
    
-   int row = -1, col = -1, move = -1;
+   int move = -1;
    
    for (int i = 0; i < MAX_MOVES; i++) {
+      int row = -1, col = -1;
       
       PrintBoard(board);
       
       move *= -1;
-      do {
+      while (!MoveIsValid(board, row, col)
+             || row < 0 || row >= 3 || col < 0 || col >= 3) {
+         
          if (move > 0) {
             cout << "\n  X's turn: ";
          }
@@ -25,7 +28,10 @@ int main(int argc, const char * argv[]) {
 
          GetMove(&row, &col);
          
-      } while (!MoveIsValid(board, row, col));
+         if (!MoveIsValid(board, row, col)) {
+            cout << "That space is already taken." << endl;
+         }
+      }
       
       board[row][col] = move;    // assign value to board matrix
    }
