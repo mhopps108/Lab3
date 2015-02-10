@@ -13,3 +13,7 @@ void GetMove(int *row, int *col);
 // and false otherwise. Used in main to see if the move is valid and alert
 // the user if it is not.
 bool MoveIsValid(char board[3][3], int row, int col);
+
+
+
+char CheckWinner(char board[3][3]);
