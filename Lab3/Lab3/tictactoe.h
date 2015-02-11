@@ -15,4 +15,4 @@ void GetMove(int *row, int *col);
 bool MoveIsValid(char board[3][3], int row, int col);
 
 
-int CheckWinner(char board[3][3]);
+char CheckWinner(char board[3][3]);

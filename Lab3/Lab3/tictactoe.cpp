@@ -11,7 +11,7 @@ int main(int argc, const char * argv[]) {
    int playerTurn = -1;       // for tracking whos turn it is
    
    int i = 0;
-   int winner = 0;
+   char winner = 0;
    //
    while (winner == 0 && i < MAX_MOVES) {
       int row = -1, col = -1;
@@ -26,7 +26,7 @@ int main(int argc, const char * argv[]) {
             cout << "\n  X's turn: ";
          }
          else {
-            cout << "   O's turn: ";
+            cout << "\n  O's turn: ";
          }
 
          GetMove(&row, &col);
@@ -49,77 +49,13 @@ int main(int argc, const char * argv[]) {
    else if (winner == -1) {
       cout << "\nO Wins!" << endl;
    }
-   else if (winner == 'T') {
+   else { // if tie game
       cout << "\nTie. No move moves." << endl;
    }
    
    cout << "\n\n";
    return 0;
 }
-
-int CheckWinner(char board[3][3]) {
-   int winner = 0;
-   
-   //cout << "\nboard val: "<< (int)board[0][0] <<" "<< (int)board[0][1] <<" "<< (int)board[0][2] << endl;
-   //cout << "board val: "<< (int)board[1][0] <<" "<< (int)board[1][1] <<" "<< (int)board[1][2] << endl;
-   //cout << "board val: "<< (int)board[2][0] <<" "<< (int)board[2][1] <<" "<< (int)board[2][2] << endl << endl;
-   
-   // check for horizontal wins
-   for (int i = 0; i < 3; i++) {
-      if (board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
-         winner = board[i][0];
-      }
-   }
-   
-   // check for vertical wins
-   for (int i = 0; i < 3; i++) {
-      if (board[0][i] == board[1][i] && board[1][i] == board[2][i]) {
-         winner = board[0][i];
-      }
-   }
-   
-   // check for cross wins
-   if ((board[0][0] == board[1][1] && board[1][1] == board[2][2]) ||
-       (board[0][2] == board[1][1] && board[1][1] == board[2][0])) {
-      winner = board[1][1];
-   }
-   
-   return winner;
-}
-
-
-/*
-int CheckWinner(char board[3][3]) {
-   int winner = 0;
-   //cout << "f winner == " << winner << endl;
-   
-   // check for horizontal wins
-   for (int i = 0; i < 3; i++) {
-      if (board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
-         winner = (int)board[i][0];
-         //cout << "winner H == " << winner << endl;
-      }
-   }
-   
-   for (int i = 0; i < 3; i++) {
-      if (board[0][i] == board[1][i] && board[1][i] == board[2][i]) {
-         winner = (int)board[0][1];
-         cout << "winner V / i == " << winner << ","<< i << endl;
-         cout << "vert board val: "<< board[0][i] <<" "<< board[1][i] <<" "<< board[2][i] << endl;
-      }
-   }
-   
-   // check for cross wins
-   if ((board[0][0] == board[1][1] && board[1][1] == board[2][2]) ||
-       (board[0][2] == board[1][1] && board[1][1] == board[2][0])) {
-      winner = (int)board[1][1];
-      cout << "winner cross == " << winner << endl;
-   }
-   
-   cout << "return ChkWin == " << winner << endl;
-   return winner;
-}
-*/
 
 
 // takes a 2-dimensional array and prints it
@@ -155,4 +91,30 @@ bool MoveIsValid(char board[3][3], int row, int col) {
    return board[row][col] == 0 ? true : false;
 }
 
+// returns char value of a winner after searching the board
+char CheckWinner(char board[3][3]) {
+   char winner = 0;
+   
+   // check for horizontal wins
+   for (int i = 0; i < 3; i++) {
+      if (board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
+         winner = board[i][0];
+      }
+   }
+   
+   // check for vertical wins
+   for (int i = 0; i < 3; i++) {
+      if (board[0][i] == board[1][i] && board[1][i] == board[2][i]) {
+         winner = board[0][i];
+      }
+   }
+   
+   // check for cross wins
+   if ((board[0][0] == board[1][1] && board[1][1] == board[2][2]) ||
+       (board[0][2] == board[1][1] && board[1][1] == board[2][0])) {
+      winner = board[1][1];
+   }
+   
+   return winner;
+}
 
