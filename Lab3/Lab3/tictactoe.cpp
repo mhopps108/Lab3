@@ -10,8 +10,10 @@ int main(int argc, const char * argv[]) {
    cout << "  - TicTacToe - " << endl;
    int playerTurn = -1;       // for tracking whos turn it is
    
-   // take moves until board is full
-   for (int i = 0; i < MAX_MOVES; i++) {
+   int i = 0;
+   int winner = 0;
+   //
+   while (winner == 0 && i < MAX_MOVES) {
       int row = -1, col = -1;
       
       PrintBoard(board);
@@ -33,24 +35,91 @@ int main(int argc, const char * argv[]) {
             cout << "That space is already taken." << endl;
          }
       }
+
       board[row][col] = playerTurn;    // assign value to board matrix
-      
-      if (CheckWinner(board) == 1) {
-         cout << "X Wins!" << endl;
-      }
-      else if (CheckWinner(board) == -1) {
-         cout << "O Wins!" << endl;
-      }
-      else if (CheckWinner(board) == 'T') {
-         cout << "Tie." << endl;
-      }
+      winner = CheckWinner(board);
+      i++;
    }
    
-   cout << "\n No move moves." << endl;
+   PrintBoard(board);
+   
+   if (winner == 1) {
+      cout << "\nX Wins!" << endl;
+   }
+   else if (winner == -1) {
+      cout << "\nO Wins!" << endl;
+   }
+   else if (winner == 'T') {
+      cout << "\nTie. No move moves." << endl;
+   }
    
    cout << "\n\n";
    return 0;
 }
+
+int CheckWinner(char board[3][3]) {
+   int winner = 0;
+   
+   //cout << "\nboard val: "<< (int)board[0][0] <<" "<< (int)board[0][1] <<" "<< (int)board[0][2] << endl;
+   //cout << "board val: "<< (int)board[1][0] <<" "<< (int)board[1][1] <<" "<< (int)board[1][2] << endl;
+   //cout << "board val: "<< (int)board[2][0] <<" "<< (int)board[2][1] <<" "<< (int)board[2][2] << endl << endl;
+   
+   // check for horizontal wins
+   for (int i = 0; i < 3; i++) {
+      if (board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
+         winner = board[i][0];
+      }
+   }
+   
+   // check for vertical wins
+   for (int i = 0; i < 3; i++) {
+      if (board[0][i] == board[1][i] && board[1][i] == board[2][i]) {
+         winner = board[0][i];
+      }
+   }
+   
+   // check for cross wins
+   if ((board[0][0] == board[1][1] && board[1][1] == board[2][2]) ||
+       (board[0][2] == board[1][1] && board[1][1] == board[2][0])) {
+      winner = board[1][1];
+   }
+   
+   return winner;
+}
+
+
+/*
+int CheckWinner(char board[3][3]) {
+   int winner = 0;
+   //cout << "f winner == " << winner << endl;
+   
+   // check for horizontal wins
+   for (int i = 0; i < 3; i++) {
+      if (board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
+         winner = (int)board[i][0];
+         //cout << "winner H == " << winner << endl;
+      }
+   }
+   
+   for (int i = 0; i < 3; i++) {
+      if (board[0][i] == board[1][i] && board[1][i] == board[2][i]) {
+         winner = (int)board[0][1];
+         cout << "winner V / i == " << winner << ","<< i << endl;
+         cout << "vert board val: "<< board[0][i] <<" "<< board[1][i] <<" "<< board[2][i] << endl;
+      }
+   }
+   
+   // check for cross wins
+   if ((board[0][0] == board[1][1] && board[1][1] == board[2][2]) ||
+       (board[0][2] == board[1][1] && board[1][1] == board[2][0])) {
+      winner = (int)board[1][1];
+      cout << "winner cross == " << winner << endl;
+   }
+   
+   cout << "return ChkWin == " << winner << endl;
+   return winner;
+}
+*/
 
 
 // takes a 2-dimensional array and prints it
@@ -84,47 +153,6 @@ void GetMove(int *row, int *col) {
 // returns true if the board is empty at the requested row/col
 bool MoveIsValid(char board[3][3], int row, int col) {
    return board[row][col] == 0 ? true : false;
-}
-
-char CheckWinner(char board[3][3]) {
-   char winner = 'T';
-   
-   //     X X X
-   for (int i = 0; i < 3; i++) {
-      if (board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
-         winner = board[i][0];
-      }
-   }
-
-   // X
-   // X
-   // X
-   for (int i = 0; i < 3; i++) {
-      if (board[0][i] == board[1][i] && board[1][i] == board[2][i]) {
-         winner = board[0][1];
-      }
-   }
-   
-   // X                 X
-   //   X      or     X
-   //     X         X
-   if ((board[0][0] == board[1][1] && board[1][1] == board[2][2]) ||
-       (board[0][2] == board[1][1] && board[1][1] == board[2][0])) {
-      winner = board[1][1];
-   }
-   
-   /*
-   // checking the result:
-   switch (winner) {
-      case 'T': // tie
-         break;
-      case 1: // X won
-         break;
-      case -1: // O won
-         break;
-   }
-*/
-   return winner;
 }
 
 
