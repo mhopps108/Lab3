@@ -1,3 +1,8 @@
+/* Matt Hopps
+ * CECS 282 Lab3
+ * 2/12/15
+ */
+
 // PrintBoard takes a 2-dimensional array parameter representing the game state
 // and prints it to cout. See the spec for details on formatting the output.
 void PrintBoard(char board[3][3]);
@@ -14,5 +19,8 @@ void GetMove(int *row, int *col);
 // the user if it is not.
 bool MoveIsValid(char board[3][3], int row, int col);
 
-
+// returns char value of a winner after searching the board
 char CheckWinner(char board[3][3]);
+
+// outputs the results of the game, the winner or tie
+void PrintResults(char winner);
