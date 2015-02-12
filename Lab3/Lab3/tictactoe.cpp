@@ -9,10 +9,10 @@ using namespace std;
 int main(int argc, const char * argv[]) {
    const int MAX_MOVES = 9;   // maximum number of moves on the board
    char board[3][3] = {0};    // matrix of game board
+   char winner = 0;           // winning player
    int playerTurn = -1;       // for tracking whos turn it is
    int movesPlayed = 0;       // number of moves played so far
-   char winner = 0;           // winning player
-   int row = -1, col = -1;    // set row and col to invalid position
+   int row = -1, col = -1;    // set row and col to invalid positio
    
    cout << "  - TicTacToe - " << endl;
    // loop until there is a winner or no moves left
@@ -33,7 +33,7 @@ int main(int argc, const char * argv[]) {
          GetMove(&row, &col);
          
          if (!MoveIsValid(board, row, col)) {
-            cout << " That space is already taken." << endl;
+            cout << " That space is already taken or invalid." << endl;
          }
          
       } while (!MoveIsValid(board, row, col));
@@ -75,13 +75,16 @@ void PrintBoard(char board[3][3]) {
 
 // use cin to read the user's choice for where to move next on the board
 void GetMove(int *row, int *col) {
-   char yumyum = 0;     // eats up the ',' in user input
+   char yumyum = 0;  // eats up the ',' in user input
    cin >> *row >> yumyum >> *col;
 }
 
-// returns true if the board is empty at the requested row/col
+// returns if the requested row/col is in bounds and an empty space
 bool MoveIsValid(char board[3][3], int row, int col) {
-   return board[row][col] == 0 ? true : false;
+   if (row >= 0 && row < 3 && col >= 0 && col < 3) {
+      return board[row][col] == 0;
+   }
+   return false;
 }
 
 // returns char value of a winner after searching the board
@@ -123,3 +126,40 @@ void PrintResults(char winner) {
       cout << "\n BOO! Tie, no move moves." << endl;
    }
 }
+
+
+
+
+/* OUTPUT:
+ 
+    0  1  2 
+   ----------
+ 0| O  .  .  | 
+ 1| .  X  .  | 
+ 2| X  .  .  | 
+   ----------
+
+ O's turn: 2,0
+ That space is already taken or invalid.
+
+ O's turn: 0,1
+
+    0  1  2 
+   ----------
+ 0| O  O  .  | 
+ 1| .  X  .  | 
+ 2| X  .  .  | 
+   ----------
+
+ X's turn: 0,2
+
+    0  1  2 
+   ----------
+ 0| O  O  X  | 
+ 1| .  X  .  | 
+ 2| X  .  .  | 
+   ----------
+
+ ** X Wins! **
+
+ */
