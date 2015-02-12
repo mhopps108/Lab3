@@ -91,17 +91,13 @@ bool MoveIsValid(char board[3][3], int row, int col) {
 char CheckWinner(char board[3][3]) {
    char winner = 0;
    
-   // check for vertical wins
+   // check for vertical and horizontal wins
    for (int i = 0; i < 3; i++) {
       if (board[0][i] == board[1][i] && board[1][i] == board[2][i]) {
          winner = board[0][i];
       }
-   }
-   
-   // check for horizontal wins
-   for (int i = 0; i < 3; i++) {
       if (board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
-         winner = board[i][1];
+         winner = board[i][0];
       }
    }
    
